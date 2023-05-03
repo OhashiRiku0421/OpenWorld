@@ -8,6 +8,9 @@ public class SkillTree : MonoBehaviour
     [SerializeField]
     private Button[] _buttons;
 
+    [SerializeField]
+    private GameObject[] _panels;
+
     private List<int>[] _skillList;//—×ÚƒŠƒXƒg
 
     private Dictionary<int, bool> _dic = new Dictionary<int, bool>();
@@ -49,6 +52,7 @@ public class SkillTree : MonoBehaviour
             _dic[n] = true;
             _buttons[n].interactable = _dic[n];
         }
+        _panels[index].SetActive(true);
     }
 
     /// <summary>
