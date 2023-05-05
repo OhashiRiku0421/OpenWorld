@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +11,7 @@ public class SkillTree : MonoBehaviour
     [SerializeField]
     private GameObject[] _panels;
 
-    private List<int>[] _skillList;//—×ÚƒŠƒXƒg
+    private List<int>[] _skillList;//éš£æ¥ãƒªã‚¹ãƒˆ
 
     private Dictionary<int, bool> _dic = new Dictionary<int, bool>();
 
@@ -23,16 +23,16 @@ public class SkillTree : MonoBehaviour
         {
             _dic.Add(i, false);
             _buttons[i].interactable = _dic[i];
-            _skillList[i] = new List<int>(); // Še’¸“_‚É‹ó‚Ì—×ÚƒŠƒXƒg‚ğ‰Šú‰»
+            _skillList[i] = new List<int>(); // å„é ‚ç‚¹ã«ç©ºã®éš£æ¥ãƒªã‚¹ãƒˆã‚’åˆæœŸåŒ–
         }
 
-        //0”Ô–Ú‚¾‚¯Å‰‚©‚çŠJ•ú‚Å‚«‚é‚æ‚¤‚É‚·‚é
+        //0ç•ªç›®ã ã‘æœ€åˆã‹ã‚‰é–‹æ”¾ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
         _buttons[0].interactable = true;
     }
 
     private void Start()
     {
-        //’¸“_‚Æq‚Ì’¸“_‚ğw’è
+        //é ‚ç‚¹ã¨å­ã®é ‚ç‚¹ã‚’æŒ‡å®š
         AddEdge(0, "1 2 3 4");
         AddEdge(1, "5 6");
         AddEdge(2, "7 8");
@@ -42,7 +42,7 @@ public class SkillTree : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒXƒLƒ‹‚ğŠJ•ú‚µ‚Äq‚ÌƒXƒLƒ‹‚ğŠJ•ú‚Å‚«‚é‚æ‚¤‚É‚·‚é
+    /// ã‚¹ã‚­ãƒ«ã‚’é–‹æ”¾ã—ã¦å­ã®ã‚¹ã‚­ãƒ«ã‚’é–‹æ”¾ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
     /// </summary>
     public void OnPush(int index)
     {
@@ -56,14 +56,14 @@ public class SkillTree : MonoBehaviour
     }
 
     /// <summary>
-    /// ’¸“_‚Ì—×ÚƒŠƒXƒg‚Éq‚Ì’¸“_‚ğ’Ç‰Á‚·‚é
+    /// é ‚ç‚¹ã®éš£æ¥ãƒªã‚¹ãƒˆã«å­ã®é ‚ç‚¹ã‚’è¿½åŠ ã™ã‚‹
     /// </summary>
     private void AddEdge(int edge, string childEdge)
     {
-        var array = childEdge.Split();//•ªŠ„
+        var array = childEdge.Split();//åˆ†å‰²
         foreach(string c in array)
         {
-            _skillList[edge].Add(int.Parse(c));///int‚ÉƒLƒƒƒXƒg‚µ‚Ä’Ç‰Á
+            _skillList[edge].Add(int.Parse(c));///intã«ã‚­ãƒ£ã‚¹ãƒˆã—ã¦è¿½åŠ 
         }
         
     }
@@ -72,7 +72,7 @@ public class SkillTree : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            Debug.Log($"’¸“_{i}: ");
+            Debug.Log($"é ‚ç‚¹{i}: ");
             foreach (int j in _skillList[i])
             {
                 Debug.Log(j);
