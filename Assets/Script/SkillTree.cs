@@ -65,7 +65,6 @@ public class SkillTree : MonoBehaviour
         {
             _skillList[edge].Add(int.Parse(c));///intにキャストして追加
         }
-        
     }
 
     private void DebugTest()
