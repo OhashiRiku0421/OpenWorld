@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BehaviourTree : MonoBehaviour
+public class BehaviourTreeRoot : MonoBehaviour
 {
 
     void Start()
