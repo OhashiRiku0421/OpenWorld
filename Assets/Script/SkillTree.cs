@@ -15,6 +15,9 @@ public class SkillTree : MonoBehaviour
 
     private Dictionary<int, bool> _dic = new Dictionary<int, bool>();
 
+    [SerializeField, SerializeReference, SubclassSelector]
+    private ISkillable[] _skillables;
+
     private void Awake()
     {
         _skillList = new List<int>[_buttons.Length];
