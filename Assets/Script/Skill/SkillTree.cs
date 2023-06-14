@@ -7,21 +7,22 @@ using System.IO;
 public class SkillTree : MonoBehaviour
 {
 
-    [SerializeField]
+    [SerializeField, Tooltip("スキルツリーのButtonの配列")]
     private Button[] _buttons;
 
-    [SerializeField]
+    [SerializeField, Tooltip("連打防止のパネルオブジェクトの配列")]
     private GameObject[] _panels;
 
-    [SerializeField]
+    [SerializeField, Tooltip("隣接リストに格納するようの数値が書かれたCSV")]
     private TextAsset _skillTreeSheet;
 
+    [Tooltip("ISkillableを継承しているクラスを設定できる")]
     [SerializeField, SerializeReference, SubclassSelector]
     private ISkillable[] _skills;
 
     private List<int>[] _skillList;//隣接リスト
 
-    private Dictionary<int, bool> _dic = new Dictionary<int, bool>();
+    private Dictionary<int, bool> _dic = new Dictionary<int, bool>();//Button用
 
     private void Awake()
     {
@@ -32,7 +33,6 @@ public class SkillTree : MonoBehaviour
             int count = i;
             _dic.Add(i, false);
             _buttons[i].onClick.AddListener(() => OnPush(count));//イベントを追加
-            Debug.Log($"あ{i}");
             _buttons[i].interactable = _dic[i]; //Buttonを押せないようにする
             _skillList[i] = new List<int>(); // 各頂点に空の隣接リストを初期化
         }
@@ -49,15 +49,18 @@ public class SkillTree : MonoBehaviour
     /// </summary>
     public void OnPush(int index)
     {
-        Debug.Log(index);
-        foreach (int n in _skillList[index])
+        //スキルポイントが足りてたらスキルを開放できる
+        if (_skills[index].OnSkill())
         {
-            _dic[n] = true;
-            _buttons[n].interactable = _dic[n];
-        }
-        _panels[index].SetActive(true);
+            //押されたButtonの子を開放できるようにする
+            foreach (int n in _skillList[index])
+            {
+                _dic[n] = true;
+                _buttons[n].interactable = _dic[n];
+            }
 
-        _skills[index].OnSkill();
+            _panels[index].SetActive(true);//二度押せないようにパネルを出す
+        }
     }
 
     /// <summary>
@@ -66,7 +69,7 @@ public class SkillTree : MonoBehaviour
     private void ReadTreeData()
     {
         StringReader reader = new StringReader(_skillTreeSheet.text);
-        reader.ReadLine();
+        reader.ReadLine();//最初の行は説明が書いてあるので読み飛ばす
 
         while (true)
         {
@@ -84,22 +87,18 @@ public class SkillTree : MonoBehaviour
             //頂点のリストに子の頂点を追加する
             for (int i = 1; i < treeDates.Length; i++)
             {
-                if (treeDates[i] != "")
-                {
-                    _skillList[edge].Add(int.Parse(treeDates[i]));
-                }
+                if (treeDates[i] == "") break;
+                _skillList[edge].Add(int.Parse(treeDates[i]));
             }
         }
     }
 
-    private void ButtonInit()
-    {
-
-    }
-
+    /// <summary>
+    /// デバッグ用のメソッド
+    /// </summary>
     private void DebugTest()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < _skillList.Length; i++)
         {
             Debug.Log($"頂点{i}: ");
             foreach (int j in _skillList[i])

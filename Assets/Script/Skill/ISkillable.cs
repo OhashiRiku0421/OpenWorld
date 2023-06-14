@@ -6,7 +6,11 @@ namespace Skill
 {
     public interface ISkillable
     {
-        public void OnSkill();
+        /// <summary>
+        /// Buttonが押されたときのスキルの開放
+        /// </summary>
+        /// <returns>スキルを開放できるかできないか</returns>
+        public bool OnSkill();
     }
 }
 

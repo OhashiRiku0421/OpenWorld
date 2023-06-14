@@ -9,9 +9,23 @@ namespace Skill
     public class Skill : ISkillable
     {
 
-        public void OnSkill()
+        [SerializeField]
+        private int _skillPoint;
+
+        [SerializeField]
+        private PlayerController _playerController;
+
+        public bool OnSkill()
         {
-            Debug.Log("Skill1開放");
+            if (_playerController.PlayerStatus.TestSkillPoint >= _skillPoint)
+            {
+                _playerController.PlayerStatus.TestSkillPoint -= _skillPoint;
+                Debug.Log("スキル開放に成功しました。");
+                return true;
+            }
+
+            Debug.Log("スキル開放に失敗しました。");
+            return false;
         }
     }
 }
