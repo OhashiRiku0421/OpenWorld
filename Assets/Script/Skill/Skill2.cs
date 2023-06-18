@@ -16,11 +16,19 @@ namespace Skill
         [SerializeField]
         private PlayerController _playerController;
 
+        [SerializeField]
+        private GameObject _sword;
+
+        private void SwordSkill()
+        {
+            _playerController.Swords.Add(_sword);
+        }
         public bool OnSkill()
         {
-            if (_playerController.PlayerStatus.TestSkillPoint >= _skillPoint)
+            if (_playerController.PlayerStatus.SkillPoint.Value >= _skillPoint)
             {
-                _playerController.PlayerStatus.TestSkillPoint -= _skillPoint;
+                _playerController.PlayerStatus.SkillPoint.Value -= _skillPoint;
+                SwordSkill();
                 Debug.Log("スキル2の開放に成功しました。");
                 return true;
             }
